@@ -1,0 +1,1794 @@
+
+/* =========================================
+   STUDYVAULT
+   Main Stylesheet
+   Version: 1.0
+========================================= */
+
+
+/* =========================================
+   1. ROOT VARIABLES
+========================================= */
+
+:root {
+    --background: #E9EDE7;
+    --surface: #F7F8F4;
+
+    --primary: #58765C;
+    --primary-dark: #405B45;
+    --primary-light: #DCE7D9;
+
+    --text: #344638;
+    --secondary-text: #788579;
+
+    --border: #D9E0D5;
+
+    --white: #FFFFFF;
+    --danger: #C45D5D;
+    --warning: #C49A55;
+
+    --shadow-sm: 0 2px 8px rgba(52, 70, 56, 0.04);
+    --shadow-md: 0 8px 24px rgba(52, 70, 56, 0.06);
+    --shadow-lg: 0 16px 40px rgba(52, 70, 56, 0.10);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+
+    --sidebar-width: 260px;
+
+    --font-primary: 'DM Sans', sans-serif;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+
+    --transition: 0.25s ease;
+}
+
+
+/* =========================================
+   2. GLOBAL RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--text);
+    font-family: var(--font-primary);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(88, 118, 92, 0.25);
+    outline-offset: 3px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    color: inherit;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* =========================================
+   3. APPLICATION LAYOUT
+========================================= */
+
+.app-container {
+    min-height: 100vh;
+    display: flex;
+}
+
+.main-content {
+    min-width: 0;
+    flex: 1;
+    margin-left: var(--sidebar-width);
+}
+
+.page-container {
+    width: 100%;
+    max-width: 1700px;
+    margin: 0 auto;
+    padding: 32px 38px 50px;
+}
+
+.page-section {
+    display: none;
+    animation: pageFade 0.3s ease;
+}
+
+.page-section.active {
+    display: block;
+}
+
+@keyframes pageFade {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================
+   4. SIDEBAR
+========================================= */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: var(--sidebar-width);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 26px 18px 18px;
+
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+
+    z-index: 100;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 42px;
+    padding: 0 7px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: var(--primary);
+    color: var(--white);
+
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.brand-text h2 {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+    line-height: 1.4;
+}
+
+.brand-text span {
+    display: block;
+    color: var(--secondary-text);
+    font-size: 11px;
+}
+
+.sidebar-close {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 25px;
+    color: var(--secondary-text);
+}
+
+.sidebar-section {
+    margin-bottom: 30px;
+}
+
+.sidebar-label {
+    padding: 0 12px;
+    margin-bottom: 12px;
+
+    color: var(--secondary-text);
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-item {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-height: 45px;
+    padding: 0 13px;
+
+    border-radius: var(--radius-md);
+
+    color: var(--secondary-text);
+    font-size: 13px;
+    font-weight: 500;
+
+    transition:
+        background var(--transition),
+        color var(--transition),
+        transform var(--transition);
+}
+
+.nav-item:hover {
+    background: var(--background);
+    color: var(--text);
+}
+
+.nav-item.active {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.nav-icon {
+    width: 20px;
+    text-align: center;
+    font-size: 19px;
+    line-height: 1;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.storage-card {
+    padding: 16px;
+
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    margin-bottom: 20px;
+}
+
+.storage-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.storage-icon {
+    font-size: 17px;
+    color: var(--primary);
+}
+
+.storage-card > p {
+    margin-top: 7px;
+    font-size: 11px;
+    color: var(--secondary-text);
+}
+
+.storage-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 12px;
+
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--secondary-text);
+}
+
+.status-dot,
+.footer-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+    background: var(--warning);
+}
+
+.status-dot.connected {
+    background: var(--primary);
+}
+
+.sidebar-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 5px;
+
+    color: var(--secondary-text);
+    font-size: 11px;
+}
+
+.footer-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+}
+
+
+/* =========================================
+   5. TOPBAR
+========================================= */
+
+.topbar {
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 0 38px;
+
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 12px;
+    color: var(--secondary-text);
+}
+
+.breadcrumb strong {
+    color: var(--text);
+    font-weight: 700;
+}
+
+.breadcrumb-separator {
+    color: var(--border);
+}
+
+.topbar-right {
+    gap: 13px;
+}
+
+.global-search {
+    width: 270px;
+    height: 39px;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 0 11px;
+
+    background: var(--background);
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    transition: border var(--transition);
+}
+
+.global-search:focus-within {
+    border-color: var(--primary);
+}
+
+.search-icon {
+    font-size: 21px;
+    color: var(--secondary-text);
+}
+
+.global-search input {
+    flex: 1;
+    min-width: 0;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    font-size: 11px;
+}
+
+.global-search kbd {
+    padding: 2px 5px;
+
+    border: 1px solid var(--border);
+    border-radius: 4px;
+
+    color: var(--secondary-text);
+    font-size: 9px;
+}
+
+.icon-button,
+.menu-toggle {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    font-size: 19px;
+    color: var(--secondary-text);
+
+    transition: var(--transition);
+}
+
+.icon-button:hover {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.profile-avatar {
+    width: 37px;
+    height: 37px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--primary-light);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+
+/* =========================================
+   6. WELCOME SECTION
+========================================= */
+
+.welcome-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 29px;
+}
+
+.eyebrow {
+    margin-bottom: 8px;
+
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+.welcome-content h1,
+.page-heading h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(25px, 3vw, 33px);
+    font-weight: 800;
+    line-height: 1.35;
+    letter-spacing: -1.2px;
+}
+
+.welcome-content h1 span {
+    color: var(--primary);
+}
+
+.welcome-description,
+.page-heading > div > p:last-child {
+    margin-top: 8px;
+
+    color: var(--secondary-text);
+    font-size: 13px;
+}
+
+.welcome-actions {
+    display: flex;
+    align-items: center;
+}
+
+
+/* =========================================
+   7. BUTTONS
+========================================= */
+
+.button {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 0 17px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition:
+        background var(--transition),
+        color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.button:active {
+    transform: scale(0.97);
+}
+
+.button-primary {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.button-primary:hover {
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.button-secondary {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.button-secondary:hover {
+    background: var(--background);
+}
+
+.button span {
+    font-size: 17px;
+}
+
+
+/* =========================================
+   8. STATISTICS CARDS
+========================================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    min-width: 0;
+    padding: 19px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-label {
+    color: var(--secondary-text);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.stat-icon {
+    width: 33px;
+    height: 33px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--primary-light);
+    color: var(--primary-dark);
+
+    font-size: 17px;
+}
+
+.stat-card h2 {
+    margin-top: 15px;
+
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.stat-card > p {
+    margin-top: 5px;
+
+    color: var(--secondary-text);
+    font-size: 10px;
+}
+
+
+/* =========================================
+   9. CONTENT CARDS
+========================================= */
+
+.content-card {
+    min-width: 0;
+    padding: 23px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 23px;
+}
+
+.section-heading .eyebrow {
+    margin-bottom: 4px;
+}
+
+.section-heading h2 {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.text-link {
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: color var(--transition);
+}
+
+.text-link:hover {
+    color: var(--primary-dark);
+}
+
+
+/* =========================================
+   10. DASHBOARD GRID
+========================================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.85fr);
+    gap: 19px;
+
+    margin-bottom: 22px;
+}
+
+.continue-card,
+.progress-card {
+    min-height: 280px;
+}
+
+
+/* =========================================
+   11. EMPTY STATES
+========================================= */
+
+.empty-state {
+    min-height: 155px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px 15px;
+
+    text-align: center;
+}
+
+.empty-icon {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    border-radius: 13px;
+    background: var(--primary-light);
+
+    color: var(--primary);
+    font-size: 21px;
+}
+
+.empty-state h3 {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.empty-state p {
+    max-width: 280px;
+    margin-top: 5px;
+
+    color: var(--secondary-text);
+    font-size: 11px;
+}
+
+
+/* =========================================
+   12. PROGRESS CIRCLE
+========================================= */
+
+.overall-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-circle {
+    --progress: 0%;
+
+    width: 145px;
+    height: 145px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            var(--primary) var(--progress),
+            var(--primary-light) var(--progress)
+        );
+
+    transition: background 0.5s ease;
+}
+
+.progress-circle-inner {
+    width: 116px;
+    height: 116px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: var(--surface);
+}
+
+.progress-circle-inner strong {
+    font-family: var(--font-heading);
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.progress-circle-inner span {
+    margin-top: 2px;
+    color: var(--secondary-text);
+    font-size: 10px;
+}
+
+.progress-message {
+    max-width: 220px;
+    margin-top: 12px;
+
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 10px;
+}
+
+.progress-summary {
+    margin-top: 20px;
+    padding-top: 16px;
+
+    border-top: 1px solid var(--border);
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 11px;
+
+    color: var(--secondary-text);
+    font-size: 11px;
+}
+
+.summary-item strong {
+    margin-left: auto;
+    color: var(--text);
+    font-size: 12px;
+}
+
+.summary-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.summary-indicator.completed {
+    background: var(--primary);
+}
+
+.summary-indicator.remaining {
+    background: #BCC8B9;
+}
+
+
+/* =========================================
+   13. BOOKS SECTION
+========================================= */
+
+.books-section,
+.recent-section {
+    margin-bottom: 22px;
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.book-card {
+    min-width: 0;
+    padding: 17px;
+
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.book-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+}
+
+.book-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.book-cover {
+    width: 40px;
+    height: 49px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px 10px 10px 6px;
+
+    background: var(--primary-light);
+    color: var(--primary-dark);
+
+    font-size: 18px;
+}
+
+.book-menu {
+    border: none;
+    background: none;
+    color: var(--secondary-text);
+    font-size: 19px;
+}
+
+.book-card h3 {
+    margin-top: 14px;
+
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+
+    overflow-wrap: anywhere;
+}
+
+.book-subject {
+    margin-top: 4px;
+    color: var(--secondary-text);
+    font-size: 10px;
+}
+
+.book-progress-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 17px;
+
+    font-size: 10px;
+}
+
+.book-progress-info span {
+    color: var(--secondary-text);
+}
+
+.book-progress-info strong {
+    color: var(--primary);
+}
+
+.progress-track {
+    width: 100%;
+    height: 6px;
+
+    margin-top: 8px;
+
+    background: var(--primary-light);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0;
+    height: 100%;
+
+    background: var(--primary);
+    border-radius: inherit;
+
+    transition: width 0.4s ease;
+}
+
+
+/* =========================================
+   14. RECENT ACTIVITY
+========================================= */
+
+.recent-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.recent-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.recent-item:last-child {
+    border-bottom: none;
+}
+
+.recent-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.recent-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.recent-details h3 {
+    font-size: 12px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.recent-details p {
+    margin-top: 3px;
+    color: var(--secondary-text);
+    font-size: 10px;
+}
+
+
+/* =========================================
+   15. INNER PAGE HEADINGS
+========================================= */
+
+.page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 28px;
+}
+
+.page-heading h1 {
+    font-size: 29px;
+}
+
+.filter-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-bottom: 22px;
+    padding: 15px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.filter-toolbar input,
+.filter-toolbar select {
+    min-width: 160px;
+    height: 39px;
+
+    padding: 0 12px;
+
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 11px;
+}
+
+.filter-toolbar input:focus,
+.filter-toolbar select:focus {
+    border-color: var(--primary);
+}
+
+.filter-toolbar input {
+    flex: 1;
+}
+
+
+/* =========================================
+   16. CHAPTERS AND TOPICS
+========================================= */
+
+.chapters-list,
+.topics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chapter-card,
+.topic-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 18px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    transition: var(--transition);
+}
+
+.chapter-card:hover,
+.topic-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.chapter-info,
+.topic-info {
+    min-width: 0;
+}
+
+.chapter-info h3,
+.topic-info h3 {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.chapter-info p,
+.topic-info p {
+    margin-top: 4px;
+    color: var(--secondary-text);
+    font-size: 10px;
+}
+
+.topic-status {
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: var(--primary-light);
+    color: var(--primary-dark);
+
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.topic-status.incomplete {
+    background: var(--background);
+    color: var(--secondary-text);
+}
+
+
+/* =========================================
+   17. NOTES
+========================================= */
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.note-card {
+    min-width: 0;
+    padding: 19px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    transition: var(--transition);
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+}
+
+.note-card h3 {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.note-card p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+
+    overflow: hidden;
+
+    margin-top: 9px;
+
+    color: var(--secondary-text);
+    font-size: 11px;
+    white-space: pre-wrap;
+}
+
+.note-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 16px;
+    padding-top: 12px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--secondary-text);
+    font-size: 10px;
+}
+
+
+/* =========================================
+   18. PROGRESS OVERVIEW
+========================================= */
+
+.progress-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+
+    margin-bottom: 22px;
+}
+
+#book-progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.book-progress-item {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.book-progress-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.book-progress-item .book-progress-info {
+    margin-top: 0;
+}
+
+
+/* =========================================
+   19. MODAL
+========================================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(35, 49, 38, 0.40);
+    backdrop-filter: blur(3px);
+
+    z-index: 500;
+}
+
+.modal {
+    width: 100%;
+    max-width: 510px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 25px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+    font-family: var(--font-heading);
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--background);
+    color: var(--secondary-text);
+
+    font-size: 21px;
+}
+
+.modal-close:hover {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.modal-body {
+    padding: 22px 0;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    padding-top: 17px;
+    border-top: 1px solid var(--border);
+}
+
+
+/* =========================================
+   20. FORM ELEMENTS
+========================================= */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-height: 42px;
+
+    padding: 11px 13px;
+
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 12px;
+    transition: border var(--transition);
+}
+
+.form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #A0AA9E;
+}
+
+.form-error {
+    color: var(--danger);
+    font-size: 10px;
+}
+
+
+/* =========================================
+   21. TOAST NOTIFICATIONS
+========================================= */
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: min(340px, calc(100% - 40px));
+
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    padding: 14px 16px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow-lg);
+
+    color: var(--text);
+    font-size: 12px;
+
+    pointer-events: auto;
+}
+
+.toast.error {
+    border-left-color: var(--danger);
+}
+
+.toast.warning {
+    border-left-color: var(--warning);
+}
+
+
+/* =========================================
+   22. MOBILE SIDEBAR OVERLAY
+========================================= */
+
+.sidebar-backdrop {
+    display: none;
+}
+
+
+/* =========================================
+   23. RESPONSIVE: TABLET
+========================================= */
+
+@media (max-width: 1150px) {
+
+    :root {
+        --sidebar-width: 225px;
+    }
+
+    .page-container {
+        padding: 28px 24px 40px;
+    }
+
+    .topbar {
+        padding: 0 24px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .books-grid,
+    .notes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+}
+
+
+/* =========================================
+   24. RESPONSIVE: SMALL TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+    .global-search {
+        width: 210px;
+    }
+
+    .welcome-section {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .progress-overview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================
+   25. RESPONSIVE: MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .sidebar {
+        width: min(280px, 85vw);
+
+        transform: translateX(-105%);
+        transition: transform 0.3s ease;
+
+        box-shadow: var(--shadow-lg);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+
+        display: block;
+
+        background: rgba(35, 49, 38, 0.35);
+
+        z-index: 90;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .topbar {
+        height: 65px;
+        padding: 0 15px;
+    }
+
+    .topbar-left,
+    .topbar-right {
+        gap: 9px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .breadcrumb {
+        gap: 6px;
+        font-size: 10px;
+    }
+
+    .global-search {
+        width: 37px;
+        padding: 0;
+        justify-content: center;
+        border: none;
+        background: transparent;
+    }
+
+    .global-search input,
+    .global-search kbd {
+        display: none;
+    }
+
+    .global-search:focus-within {
+        position: absolute;
+        left: 65px;
+        right: 100px;
+        width: auto;
+        padding: 0 10px;
+        background: var(--background);
+        border: 1px solid var(--primary);
+        z-index: 5;
+    }
+
+    .global-search:focus-within input {
+        display: block;
+    }
+
+    .profile-avatar {
+        width: 33px;
+        height: 33px;
+    }
+
+    .icon-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .page-container {
+        padding: 24px 15px 35px;
+    }
+
+    .welcome-content h1 {
+        font-size: 25px;
+    }
+
+    .welcome-description {
+        font-size: 12px;
+    }
+
+    .stats-grid {
+        gap: 11px;
+    }
+
+    .stat-card {
+        padding: 14px;
+        border-radius: 13px;
+    }
+
+    .stat-card h2 {
+        font-size: 24px;
+    }
+
+    .stat-label {
+        font-size: 10px;
+    }
+
+    .stat-card > p {
+        font-size: 9px;
+    }
+
+    .stat-icon {
+        width: 29px;
+        height: 29px;
+    }
+
+    .content-card {
+        padding: 17px;
+    }
+
+    .section-heading h2 {
+        font-size: 15px;
+    }
+
+    .books-grid,
+    .notes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .book-card,
+    .note-card {
+        padding: 13px;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .page-heading h1 {
+        font-size: 25px;
+    }
+
+    .filter-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px;
+    }
+
+    .filter-toolbar input,
+    .filter-toolbar select {
+        width: 100%;
+    }
+
+    .progress-overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal {
+        padding: 19px;
+        border-radius: 17px;
+    }
+
+}
+
+
+/* =========================================
+   26. RESPONSIVE: VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 380px) {
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .books-grid,
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar-right {
+        gap: 5px;
+    }
+
+    .breadcrumb-separator,
+    .breadcrumb > span:first-child {
+        display: none;
+    }
+
+}
+
+
+/* =========================================
+   27. REDUCED MOTION ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}

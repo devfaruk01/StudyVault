@@ -1,0 +1,933 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="StudyVault - Your personal digital study management workspace."
+    >
+
+    <meta name="theme-color" content="#E9EDE7">
+
+    <title>StudyVault — Personal Study Workspace</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Application Styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" defer></script>
+
+    <!-- Application Scripts -->
+    <script src="js/data.js" defer></script>
+    <script src="js/animations.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-header">
+
+                <a href="#dashboard" class="brand">
+                    <div class="brand-icon">
+                        <span>SV</span>
+                    </div>
+
+                    <div class="brand-text">
+                        <h2>StudyVault</h2>
+                        <span>Personal Workspace</span>
+                    </div>
+                </a>
+
+                <button
+                    class="sidebar-close"
+                    id="sidebar-close"
+                    type="button"
+                    aria-label="Close sidebar"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- Main Navigation -->
+
+            <div class="sidebar-section">
+
+                <p class="sidebar-label">WORKSPACE</p>
+
+                <nav class="sidebar-nav" aria-label="Main navigation">
+
+                    <a
+                        href="#dashboard"
+                        class="nav-item active"
+                        data-page="dashboard"
+                        aria-current="page"
+                    >
+                        <span class="nav-icon">⌂</span>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a
+                        href="#books"
+                        class="nav-item"
+                        data-page="books"
+                    >
+                        <span class="nav-icon">▤</span>
+                        <span>My Books</span>
+                    </a>
+
+                    <a
+                        href="#chapters"
+                        class="nav-item"
+                        data-page="chapters"
+                    >
+                        <span class="nav-icon">▣</span>
+                        <span>Chapters</span>
+                    </a>
+
+                    <a
+                        href="#topics"
+                        class="nav-item"
+                        data-page="topics"
+                    >
+                        <span class="nav-icon">☷</span>
+                        <span>Topics</span>
+                    </a>
+
+                    <a
+                        href="#notes"
+                        class="nav-item"
+                        data-page="notes"
+                    >
+                        <span class="nav-icon">✎</span>
+                        <span>My Notes</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <!-- Study Management -->
+
+            <div class="sidebar-section">
+
+                <p class="sidebar-label">STUDY MANAGEMENT</p>
+
+                <nav class="sidebar-nav">
+
+                    <a
+                        href="#progress"
+                        class="nav-item"
+                        data-page="progress"
+                    >
+                        <span class="nav-icon">◷</span>
+                        <span>Study Progress</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <!-- Sidebar Bottom -->
+
+            <div class="sidebar-bottom">
+
+                <div class="storage-card">
+
+                    <div class="storage-heading">
+                        <span class="storage-icon">☁</span>
+                        <span>Cloud Storage</span>
+                    </div>
+
+                    <p>Google Sheets Database</p>
+
+                    <div class="storage-status">
+                        <span class="status-dot"></span>
+                        <span id="connection-status">Not Connected</span>
+                    </div>
+
+                </div>
+
+                <div class="sidebar-footer">
+                    <span class="footer-dot"></span>
+                    <span>StudyVault v1.0</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main class="main-content">
+
+            <!-- Topbar -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        class="menu-toggle"
+                        id="menu-toggle"
+                        type="button"
+                        aria-label="Open sidebar"
+                    >
+                        ☰
+                    </button>
+
+                    <div class="breadcrumb">
+                        <span>Workspace</span>
+                        <span class="breadcrumb-separator">/</span>
+                        <strong id="current-page-title">Dashboard</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <div class="global-search">
+
+                        <span class="search-icon">⌕</span>
+
+                        <input
+                            type="search"
+                            id="global-search"
+                            placeholder="Search anything..."
+                            aria-label="Search books, topics and notes"
+                        >
+
+                        <kbd>Ctrl K</kbd>
+
+                    </div>
+
+                    <button
+                        class="icon-button"
+                        id="refresh-button"
+                        type="button"
+                        aria-label="Refresh study data"
+                        title="Refresh"
+                    >
+                        ↻
+                    </button>
+
+                    <div class="profile-avatar" aria-label="My profile">
+                        S
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- Page Container -->
+
+            <div class="page-container" id="page-container">
+
+
+                <!-- ================= DASHBOARD ================= -->
+
+                <section
+                    class="page-section active"
+                    id="dashboard-page"
+                    data-section="dashboard"
+                >
+
+                    <!-- Welcome Section -->
+
+                    <div class="welcome-section">
+
+                        <div class="welcome-content">
+
+                            <p class="eyebrow">YOUR LEARNING SPACE</p>
+
+                            <h1>
+                                Welcome back to
+                                <span>StudyVault.</span>
+                            </h1>
+
+                            <p class="welcome-description">
+                                Keep learning, stay organized, and make
+                                consistent progress toward your goals.
+                            </p>
+
+                        </div>
+
+                        <div class="welcome-actions">
+
+                            <button
+                                class="button button-primary"
+                                type="button"
+                                data-action="add-book"
+                            >
+                                <span>＋</span>
+                                Add New Book
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Statistics -->
+
+                    <div class="stats-grid">
+
+                        <article class="stat-card">
+
+                            <div class="stat-card-top">
+                                <span class="stat-label">Total Books</span>
+                                <span class="stat-icon">▤</span>
+                            </div>
+
+                            <h2 id="stat-total-books">0</h2>
+
+                            <p>Books in your library</p>
+
+                        </article>
+
+
+                        <article class="stat-card">
+
+                            <div class="stat-card-top">
+                                <span class="stat-label">Total Chapters</span>
+                                <span class="stat-icon">▣</span>
+                            </div>
+
+                            <h2 id="stat-total-chapters">0</h2>
+
+                            <p>Organized chapters</p>
+
+                        </article>
+
+
+                        <article class="stat-card">
+
+                            <div class="stat-card-top">
+                                <span class="stat-label">Total Topics</span>
+                                <span class="stat-icon">☷</span>
+                            </div>
+
+                            <h2 id="stat-total-topics">0</h2>
+
+                            <p>Topics to explore</p>
+
+                        </article>
+
+
+                        <article class="stat-card">
+
+                            <div class="stat-card-top">
+                                <span class="stat-label">Completed Topics</span>
+                                <span class="stat-icon">✓</span>
+                            </div>
+
+                            <h2 id="stat-completed-topics">0</h2>
+
+                            <p>Topics successfully completed</p>
+
+                        </article>
+
+                    </div>
+
+
+                    <!-- Dashboard Main Grid -->
+
+                    <div class="dashboard-grid">
+
+
+                        <!-- Continue Studying -->
+
+                        <section class="content-card continue-card">
+
+                            <div class="section-heading">
+
+                                <div>
+                                    <p class="eyebrow">PICK UP WHERE YOU LEFT</p>
+                                    <h2>Continue Studying</h2>
+                                </div>
+
+                                <a
+                                    href="#books"
+                                    class="text-link"
+                                    data-page="books"
+                                >
+                                    View Library →
+                                </a>
+
+                            </div>
+
+                            <div
+                                class="continue-list"
+                                id="continue-studying-list"
+                            >
+
+                                <div class="empty-state">
+                                    <span class="empty-icon">▤</span>
+                                    <h3>No active study sessions</h3>
+                                    <p>
+                                        Add a book and start organizing
+                                        your learning journey.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- Overall Progress -->
+
+                        <section class="content-card progress-card">
+
+                            <div class="section-heading">
+                                <div>
+                                    <p class="eyebrow">YOUR ACHIEVEMENTS</p>
+                                    <h2>Study Progress</h2>
+                                </div>
+                            </div>
+
+                            <div class="overall-progress">
+
+                                <div class="progress-circle" id="overall-progress-circle">
+
+                                    <div class="progress-circle-inner">
+
+                                        <strong id="overall-progress-value">0%</strong>
+
+                                        <span>Completed</span>
+
+                                    </div>
+
+                                </div>
+
+                                <p class="progress-message">
+                                    Every topic you complete brings
+                                    you one step forward.
+                                </p>
+
+                            </div>
+
+                            <div class="progress-summary">
+
+                                <div class="summary-item">
+                                    <span class="summary-indicator completed"></span>
+                                    <span>Completed Topics</span>
+                                    <strong id="progress-completed">0</strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span class="summary-indicator remaining"></span>
+                                    <span>Remaining Topics</span>
+                                    <strong id="progress-remaining">0</strong>
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+
+                    <!-- My Books -->
+
+                    <section class="content-card books-section">
+
+                        <div class="section-heading">
+
+                            <div>
+                                <p class="eyebrow">YOUR PERSONAL LIBRARY</p>
+                                <h2>My Books</h2>
+                            </div>
+
+                            <a
+                                href="#books"
+                                class="text-link"
+                                data-page="books"
+                            >
+                                View All →
+                            </a>
+
+                        </div>
+
+
+                        <div class="books-grid" id="dashboard-books-grid">
+
+                            <div class="empty-state">
+                                <span class="empty-icon">▤</span>
+                                <h3>Your library is empty</h3>
+                                <p>
+                                    Your books will appear here after
+                                    you add them.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- Recently Updated -->
+
+                    <section class="content-card recent-section">
+
+                        <div class="section-heading">
+
+                            <div>
+                                <p class="eyebrow">YOUR LATEST ACTIVITY</p>
+                                <h2>Recently Updated</h2>
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="recent-list"
+                            id="recently-updated-list"
+                        >
+
+                            <div class="empty-state">
+                                <p>No recent activity yet.</p>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </section>
+
+
+                <!-- ================= BOOKS PAGE ================= -->
+
+                <section
+                    class="page-section"
+                    id="books-page"
+                    data-section="books"
+                    hidden
+                >
+
+                    <div class="page-heading">
+
+                        <div>
+                            <p class="eyebrow">YOUR PERSONAL LIBRARY</p>
+                            <h1>My Books</h1>
+                            <p>Manage and organize all your academic books.</p>
+                        </div>
+
+                        <button
+                            class="button button-primary"
+                            type="button"
+                            data-action="add-book"
+                        >
+                            ＋ Add Book
+                        </button>
+
+                    </div>
+
+
+                    <div class="filter-toolbar">
+
+                        <input
+                            type="search"
+                            id="book-search"
+                            placeholder="Search books..."
+                            aria-label="Search books"
+                        >
+
+                        <select
+                            id="book-subject-filter"
+                            aria-label="Filter books by subject"
+                        >
+                            <option value="">All Subjects</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="books-grid" id="books-grid">
+
+                        <div class="empty-state">
+                            <h3>No books found</h3>
+                            <p>Add your first book to get started.</p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================= CHAPTERS PAGE ================= -->
+
+                <section
+                    class="page-section"
+                    id="chapters-page"
+                    data-section="chapters"
+                    hidden
+                >
+
+                    <div class="page-heading">
+
+                        <div>
+                            <p class="eyebrow">ORGANIZE YOUR LEARNING</p>
+                            <h1>Chapters</h1>
+                            <p>Manage chapters inside your academic books.</p>
+                        </div>
+
+                        <button
+                            class="button button-primary"
+                            type="button"
+                            data-action="add-chapter"
+                        >
+                            ＋ Add Chapter
+                        </button>
+
+                    </div>
+
+
+                    <div class="filter-toolbar">
+
+                        <select
+                            id="chapter-book-filter"
+                            aria-label="Select a book"
+                        >
+                            <option value="">All Books</option>
+                        </select>
+
+                        <input
+                            type="search"
+                            id="chapter-search"
+                            placeholder="Search chapters..."
+                            aria-label="Search chapters"
+                        >
+
+                    </div>
+
+
+                    <div
+                        class="chapters-list"
+                        id="chapters-list"
+                    >
+
+                        <div class="empty-state">
+                            <h3>No chapters available</h3>
+                            <p>Add a book and create its chapters.</p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================= TOPICS PAGE ================= -->
+
+                <section
+                    class="page-section"
+                    id="topics-page"
+                    data-section="topics"
+                    hidden
+                >
+
+                    <div class="page-heading">
+
+                        <div>
+                            <p class="eyebrow">TRACK YOUR LEARNING</p>
+                            <h1>Topics</h1>
+                            <p>Organize topics and track your completion.</p>
+                        </div>
+
+                        <button
+                            class="button button-primary"
+                            type="button"
+                            data-action="add-topic"
+                        >
+                            ＋ Add Topic
+                        </button>
+
+                    </div>
+
+
+                    <div class="filter-toolbar">
+
+                        <select
+                            id="topic-book-filter"
+                            aria-label="Filter topics by book"
+                        >
+                            <option value="">All Books</option>
+                        </select>
+
+                        <select
+                            id="topic-chapter-filter"
+                            aria-label="Filter topics by chapter"
+                        >
+                            <option value="">All Chapters</option>
+                        </select>
+
+                        <select
+                            id="topic-status-filter"
+                            aria-label="Filter topics by completion status"
+                        >
+                            <option value="">All Status</option>
+                            <option value="completed">Completed</option>
+                            <option value="incomplete">Incomplete</option>
+                        </select>
+
+                        <input
+                            type="search"
+                            id="topic-search"
+                            placeholder="Search topics..."
+                            aria-label="Search topics"
+                        >
+
+                    </div>
+
+
+                    <div
+                        class="topics-list"
+                        id="topics-list"
+                    >
+
+                        <div class="empty-state">
+                            <h3>No topics available</h3>
+                            <p>Create chapters and add study topics.</p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================= NOTES PAGE ================= -->
+
+                <section
+                    class="page-section"
+                    id="notes-page"
+                    data-section="notes"
+                    hidden
+                >
+
+                    <div class="page-heading">
+
+                        <div>
+                            <p class="eyebrow">YOUR KNOWLEDGE SPACE</p>
+                            <h1>My Notes</h1>
+                            <p>Keep your important study notes organized.</p>
+                        </div>
+
+                        <button
+                            class="button button-primary"
+                            type="button"
+                            data-action="add-note"
+                        >
+                            ＋ Create Note
+                        </button>
+
+                    </div>
+
+
+                    <div class="filter-toolbar">
+
+                        <input
+                            type="search"
+                            id="notes-search"
+                            placeholder="Search your notes..."
+                            aria-label="Search notes"
+                        >
+
+                        <select
+                            id="notes-book-filter"
+                            aria-label="Filter notes by book"
+                        >
+                            <option value="">All Books</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="notes-grid" id="notes-grid">
+
+                        <div class="empty-state">
+                            <span class="empty-icon">✎</span>
+                            <h3>No notes yet</h3>
+                            <p>Create your first study note.</p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================= PROGRESS PAGE ================= -->
+
+                <section
+                    class="page-section"
+                    id="progress-page"
+                    data-section="progress"
+                    hidden
+                >
+
+                    <div class="page-heading">
+
+                        <div>
+                            <p class="eyebrow">YOUR LEARNING JOURNEY</p>
+                            <h1>Study Progress</h1>
+                            <p>Understand how far you have progressed.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-overview-grid">
+
+                        <article class="stat-card">
+                            <span class="stat-label">Overall Progress</span>
+                            <h2 id="detail-overall-progress">0%</h2>
+                            <p>Across all your books</p>
+                        </article>
+
+                        <article class="stat-card">
+                            <span class="stat-label">Completed</span>
+                            <h2 id="detail-completed-topics">0</h2>
+                            <p>Completed topics</p>
+                        </article>
+
+                        <article class="stat-card">
+                            <span class="stat-label">Remaining</span>
+                            <h2 id="detail-remaining-topics">0</h2>
+                            <p>Topics left to study</p>
+                        </article>
+
+                    </div>
+
+
+                    <section class="content-card">
+
+                        <div class="section-heading">
+                            <div>
+                                <p class="eyebrow">BOOK-WISE ANALYSIS</p>
+                                <h2>Progress by Book</h2>
+                            </div>
+                        </div>
+
+                        <div id="book-progress-list">
+
+                            <div class="empty-state">
+                                <p>Your book progress will appear here.</p>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </section>
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= GLOBAL MODAL ================= -->
+
+    <div
+        class="modal-overlay"
+        id="modal-overlay"
+        hidden
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal"
+            id="modal-container"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            tabindex="-1"
+        >
+
+            <div class="modal-header">
+
+                <div>
+                    <p class="eyebrow" id="modal-eyebrow">STUDYVAULT</p>
+                    <h2 id="modal-title">Create New Item</h2>
+                </div>
+
+                <button
+                    class="modal-close"
+                    id="modal-close"
+                    type="button"
+                    aria-label="Close modal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="modal-body" id="modal-body">
+                <!-- Dynamic form content will be inserted here. -->
+            </div>
+
+
+            <div class="modal-footer" id="modal-footer">
+
+                <button
+                    class="button button-secondary"
+                    id="modal-cancel"
+                    type="button"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="button button-primary"
+                    id="modal-submit"
+                    type="button"
+                >
+                    Save
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= NOTIFICATION ================= -->
+
+    <div
+        class="toast-container"
+        id="toast-container"
+        aria-live="polite"
+        aria-atomic="true"
+    >
+        <!-- Notifications will appear here. -->
+    </div>
+
+
+</body>
+</html>
